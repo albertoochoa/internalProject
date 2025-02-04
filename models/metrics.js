@@ -14,6 +14,15 @@ const HolidaySchema = new mongoose.Schema({
     description: {
         type: String
     }
+}, {
+    toJSON: {
+        transform: function (doc, ret) {
+            delete ret._id;    
+            delete ret.__v;    
+        }
+    },
+    id: false 
 });
+
 const Holiday = mongoose.model('Holiday', HolidaySchema);
 module.exports = Holiday;

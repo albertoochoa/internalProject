@@ -15,8 +15,8 @@ const createHolidayHandler = async (request, h) => {
         });
 
         const savedHoliday = await newHoliday.save();
-
-        return h.response(savedHoliday).code(201); 
+        console.log(savedHoliday.toJSON());
+        return h.response(savedHoliday.toJSON()).code(201); 
     } catch (error) {
         console.error(error);
         if (error.code === 11000) {

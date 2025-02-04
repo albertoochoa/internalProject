@@ -6,6 +6,7 @@ const getPageHolidaysHandler = async (request, h) => {
     const allHolidays = await Holiday.find({});
     const upcomingHolidays = allHolidays.filter(holiday => {
       const holidayDate = new Date(holiday.date);
+      console.log(holidayDate);
       return holidayDate > today;
     });
 
