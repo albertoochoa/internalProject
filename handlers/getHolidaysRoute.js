@@ -20,3 +20,5 @@ module.exports = {
   method: 'GET',
   handler: getPageHolidaysHandler
 };
+console.log('getting here, get Holidays');
+

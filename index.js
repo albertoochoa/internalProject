@@ -27,3 +27,4 @@ process.on('SIGINT', async () => {
     process.exit(0);
 })
 init();
+console.log('getting here, Index');
