@@ -2,6 +2,7 @@ const getHolidaysHandler = require('./getHolidaysRoute');
 const createHolidayHandler = require('./postHolidaysRoute');
 const updateHolidayHandler = require('./putHolidaysRoute');
 const deleteHolidayHandler = require('./deleteHolidaysRoute');
+const WelcomeIndex = require('./getWelcomeRoute');
 
 const routes = [
 {
@@ -23,5 +24,10 @@ const routes = [
 method: 'DELETE',
 path: '/deleteHolidays',
 handler: deleteHolidayHandler.handler
+},
+{
+method: 'GET',
+path: '/',
+handler: WelcomeIndex.handler
 }]
 module.exports = routes;

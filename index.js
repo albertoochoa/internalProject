@@ -5,7 +5,7 @@ const connectDB = require('./config/db.js')
 const routes = require('./handlers/routes.js')
 
 const server = new Hapi.server({
-    port: 3000
+    port: 3000,
 });
 
 const init = async () => {
