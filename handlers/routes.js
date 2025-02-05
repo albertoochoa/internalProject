@@ -3,6 +3,7 @@ const createHolidayHandler = require('./postHolidaysRoute');
 const updateHolidayHandler = require('./putHolidaysRoute');
 const deleteHolidayHandler = require('./deleteHolidaysRoute');
 const WelcomeIndex = require('./getWelcomeRoute');
+const authToken = require('./authTokenRoute');
 
 const routes = [
 {
@@ -21,13 +22,18 @@ const routes = [
     handler: updateHolidayHandler.handler
 },
 {
-method: 'DELETE',
-path: '/deleteHolidays',
-handler: deleteHolidayHandler.handler
+    method: 'DELETE',
+    path: '/deleteHolidays',
+    handler: deleteHolidayHandler.handler
 },
 {
-method: 'GET',
-path: '/',
-handler: WelcomeIndex.handler
+    method: 'GET',
+    path: '/',
+    handler: WelcomeIndex.handler
+}, 
+{
+    method: 'POST',
+    path: '/postAuthToken',
+    handler: authToken.handler
 }]
 module.exports = routes;

@@ -7,13 +7,10 @@ const deleteHolidayHandler = async (request, h) => {
         if (!name) {
             return h.response({ error: 'Holiday name is required in the request body.' }).code(400);
         }
-
         const deletedHoliday = await Holiday.findOneAndDelete({ name });
-
         if (!deletedHoliday) {
             return h.response({ error: 'Holiday not found.' }).code(404);
         }
-
         return h.response({
             message: 'Holiday deleted successfully.',
             holiday: deletedHoliday
