@@ -17,10 +17,16 @@ const getHolidaysHandler = async (request, h) => {
         });
 
         if (countly) {
-            countly.add_event({  
-                key: 'get_holidays',
-                count: 1
-            });
+          console.log("Sending event to Countly:", {
+              key: 'get_holidays',
+              count: 1
+          });
+      
+          countly.add_event({
+              key: 'get_holidays',
+              count: 1
+          });
+      
         }
 
         return h.response(upcomingHolidays).code(200); 
