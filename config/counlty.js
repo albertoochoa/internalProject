@@ -11,9 +11,13 @@ async function initializeCountly() {
         });
         Countly.debug_mode = true;
         setInterval(() => {
-            Countly.send_events();
-            console.log("Forcing event submission to Countly...");
-        }, 10000); 
+            if (Countly && Countly.q) {
+                Countly.q.push(['fetch_remote_config']);
+                console.log("Forcing event submission to Countly...");
+            } else {
+                console.warn("Countly instance not ready for event submission.");
+            }
+        }, 10000);
 
         console.log("Countly initialized successfully!");
         return Countly;  

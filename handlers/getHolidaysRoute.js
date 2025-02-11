@@ -21,13 +21,12 @@ const getHolidaysHandler = async (request, h) => {
               key: 'get_holidays',
               count: 1
           });
-      
-          countly.add_event({
+              countly.add_event({
               key: 'get_holidays',
               count: 1
           });
-      
-        }
+          countly.q.push(['fetch_remote_config']);  
+      }
 
         return h.response(upcomingHolidays).code(200); 
     } catch (error) {
