@@ -2,8 +2,8 @@ const Holiday = require('../models/metrics');
 const countly = require('countly-sdk-nodejs'); 
 
 countly.init({
-  app_key: 'YOUR_APP_KEY', 
-  url: 'https://your_domain_or_server_ip' 
+  app_key: process.env.APP_KEY, 
+  url: process.env.COUNTLY_SRVR_URL 
 });
 
 const getPageHolidaysHandler = async (request, h) => {
