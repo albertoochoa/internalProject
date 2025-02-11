@@ -17,7 +17,7 @@ const getHolidaysHandler = async (request, h) => {
         });
 
         if (countly) {
-            countly.track_event({  
+            countly.add_event({  
                 key: 'get_holidays',
                 count: 1
             });

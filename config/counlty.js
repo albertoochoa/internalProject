@@ -1,29 +1,21 @@
 const Countly = require('countly-sdk-nodejs');
+const dotenv = require('dotenv').config();
 
 async function initializeCountly() {
     try {
-        const countly = Countly; 
-        const fs = require('fs');
-        const storagePath = './countly_storage'; 
-
-        if (!fs.existsSync(storagePath)) {
-            fs.mkdirSync(storagePath);
-        }
-
-        await countly.init({
-            app_key: 'YOUR_APP_KEY',  
-            server_url: 'YOUR_SERVER_URL', 
-            storagePath: storagePath
+        Countly.init({
+            app_key: process.env.COUNTLY_APP_KEY,  
+            server_url: process.comfig.COUNTLY_SERVER_URL, 
+            storage_path: path.join(__dirname, '../countly_storage')  
         });
 
         console.log("Countly initialized successfully!");
-        return countly;
+        return Countly;  
+
     } catch (error) {
         console.error("Countly initialization failed:", error);
         return null;
     }
 }
 
-module.exports = {
-    initializeCountly
-};
+module.exports = { initializeCountly };
