@@ -1,49 +1,63 @@
 const Holiday = require('../models/metrics');
-const countly = require('countly-sdk-nodejs'); 
+const { initializeCountly } = require('../config/counlty');
 
-countly.init({
-  app_key: process.env.APP_KEY, 
-  url: process.env.COUNTLY_SRVR_URL 
-});
+let countly; 
 
-const getPageHolidaysHandler = async (request, h) => {
-  try {
-    const today = new Date();
-    const allHolidays = await Holiday.find({});
-    const upcomingHolidays = allHolidays.filter(holiday => {
-      const holidayDate = new Date(holiday.date);
-      return holidayDate > today;
-    });
+(async () => {
+    countly = await initializeCountly();
+})();
 
-    countly.track_event({
-      key: 'get_holidays', 
-      count: 1, 
-      segments: {
-        num_holidays: upcomingHolidays.length, 
-        request_ip: request.info.remoteAddress, 
-      },
-    });
+const getHolidaysHandler = async (request, h) => {
+    try {
+        const today = new Date();
+        const allHolidays = await Holiday.find({});
+        const upcomingHolidays = allHolidays.filter(holiday => {
+            const holidayDate = new Date(holiday.date);
+            return holidayDate > today;
+        });
 
-    return upcomingHolidays;
-  } catch (error) {
-    console.error(error);
+        if (countly) {
+            countly.track_event({  
+                key: 'get_holidays',
+                count: 1
+            });
+        }
 
-    countly.track_event({
-      key: 'get_holidays_error',
-      count: 1,
-      segments: {
-        error_message: error.message,
-      }
-    });
-
-    return h.response({ error: 'Failed to fetch holidays' }).code(500);
-  }
+        return h.response(upcomingHolidays).code(200); 
+    } catch (error) {
+        console.error("Error in getHolidaysHandler:", error);
+        return h.response({ error: 'Failed to fetch holidays' }).code(500);
+    }
 };
 
 module.exports = {
-  method: 'GET',
-  handler: getPageHolidaysHandler
+    handler: getHolidaysHandler 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
