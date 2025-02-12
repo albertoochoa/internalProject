@@ -2,25 +2,21 @@ const Countly = require('countly-sdk-nodejs');
 const dotenv = require('dotenv').config();
 const path = require('path');
 
-
 async function initializeCountly() {
     try {
-        await new Promise((resolve) => {
-            Countly.init({
-                app_key: process.env.APP_KEY,  
-                server_url: process.env.COUNTLY_SRVR_URL,  
-                storage_path: path.join(__dirname, '../countly_storage')
-            });
-
-            console.log("Countly initialized successfully!");
-            resolve();
+        Countly.init({
+            app_key: process.env.APP_KEY,  
+            server_url: process.env.COUNTLY_SRVR_URL,  
+            storage_path: path.join(__dirname, '../countly_storage')
         });
 
+        console.log("Countly initialized successfully!");
         setInterval(() => {
-            if (Countly) {
-                Countly.flushQueue(() => {
-                    console.log("Flushed Countly event queue.");
-                });
+            if (Countly.q) {
+                Countly.q.push(['track']);
+                console.log("Sent queued events to Countly.");
+            } else {
+                console.warn("Countly queue is not initialized.");
             }
         }, 10000);
 
