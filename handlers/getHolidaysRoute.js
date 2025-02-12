@@ -20,11 +20,14 @@ const getHolidaysHandler = async (request, h) => {
     });
 
     if (countly) {
-      console.log("Sending event to Countly:", { key: 'get_holidays', count: 1 });
-      countly.add_event({ key: 'get_holidays', count: 1 });
+      console.log("Sending event to Countly: { key: 'get_holidays', count: 1 }");
+      countly.add_event({
+        key: 'get_holidays',
+        count: 1
+      });
     } else {
       console.warn("Countly instance not ready for event submission.");
-    }
+    }    
 
     return h.response(upcomingHolidays).code(200); 
   } catch (error) {
