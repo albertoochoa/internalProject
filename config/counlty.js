@@ -6,10 +6,11 @@ async function initializeCountly() {
     try {
         Countly.init({
             app_key: process.env.APP_KEY,  
-            server_url: process.env.COUNTLY_SRVR_URL,  
+            url: process.env.COUNTLY_SRVR_URL,  
             storage_path: path.join(__dirname, '../countly_storage')
         });
 
+        Countly.begin_session();
         console.log("Countly initialized successfully!");
         setInterval(() => {
             if (Countly.q) {
