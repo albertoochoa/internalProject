@@ -1,10 +1,12 @@
 const Holiday = require('../models/metrics');
-const { initializeCountly } = require('../config/counlty');
+const { initializeCountly } = require('../config/counlty.js');
 
-let countly; 
-
+let countly = null; 
 (async () => {
     countly = await initializeCountly();
+    if (!countly) {
+        console.error("Failed to initialize Countly. Events will not be tracked.");
+    }
 })();
 
 const getHolidaysHandler = async (request, h) => {
@@ -17,16 +19,22 @@ const getHolidaysHandler = async (request, h) => {
         });
 
         if (countly) {
-          console.log("Sending event to Countly:", {
-              key: 'get_holidays',
-              count: 1
-          });
-              countly.add_event({
-              key: 'get_holidays',
-              count: 1
-          });
-          countly.q.push(['fetch_remote_config']);  
-      }
+            console.log("Sending event to Countly:", {
+                key: 'get_holidays',
+                count: 1
+            });
+
+            countly.add_event({
+                key: 'get_holidays',
+                count: 1
+            });
+
+            countly.flushQueue(() => {
+                console.log("Event successfully sent to Countly.");
+            });
+        } else {
+            console.warn("Countly instance not ready for event submission.");
+        }
 
         return h.response(upcomingHolidays).code(200); 
     } catch (error) {
