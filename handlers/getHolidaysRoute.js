@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const Holiday = require('../models/metrics');
-const { initializeCountly } = require('../config/countly');
+const { initializeCountly } = require('../config/counlty');
 
 let countly = null;
 
