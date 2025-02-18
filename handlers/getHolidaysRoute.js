@@ -28,14 +28,15 @@ const getHolidaysHandler = async (request, h) => {
       return holidayDate > today;
     });
 
-    const responseTime = Date.now() - startTime; 
 
+    const responseTime = Date.now() - startTime; 
+    const responseTimeInMiliSeconds = responseTime / 1000;
     if (countly) {
-      console.log(`Sending event to Countly: { key: 'get_holidays', count: 1, response_time: ${responseTime}ms }`);
+      console.log(`Sending event to Countly: { key: 'get_holidays', count: 1, response_time: ${responseTimeInMiliSeconds}ms }`);
       countly.add_event({
         key: 'get_holidays_usages',
         count: 1,
-        segmentation: { response_time: responseTime } 
+        segmentation: { response_time: responseTime} 
       });
     } else {
       console.warn("Countly instance not ready for event submission.");
