@@ -2,6 +2,8 @@
 const Joi = require('joi');
 const Holiday = require('../models/metrics');
 const axios = require('axios');
+const { initializeCountly } = require('./config/counlty.js'); 
+
 
 let countlyPromise = initializeCountly();
 
