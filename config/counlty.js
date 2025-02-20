@@ -6,9 +6,9 @@ async function initializeCountly() {
   try {
     Countly.init({
       app_key: process.env.APP_KEY,
-      url: process.env.COUNTLY_SRVR_URL, 
+      url: process.env.COUNTLY_SRVR_URL,
       storage_path: path.join(__dirname, '../countly_storage'),
-      //debug: true                       
+      //debug: true  // Uncomment for debugging if needed
     });
 
     Countly.begin_session();
