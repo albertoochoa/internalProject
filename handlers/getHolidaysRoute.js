@@ -1,6 +1,8 @@
+// getHolidaysRoute.js
 const Joi = require('joi');
 const Holiday = require('../models/metrics');
-const { initializeCountly } = require('../config/counlty');
+const { initializeCountly } = require('../config/countly');
+const axios = require('axios');
 
 let countlyPromise = initializeCountly();
 
@@ -14,6 +16,14 @@ const getHolidaysHandler = async (request, h) => {
   }
 
   try {
+    // Axios Test Request
+    try {
+      const axiosResponse = await axios.get('http://localhost:8081'); // Adjust /api if necessary
+      console.log("Axios test request successful:", axiosResponse.data);
+    } catch (axiosError) {
+      console.error("Axios test request failed:", axiosError.message);
+    }
+
     const today = new Date();
     const allHolidays = await Holiday.find({});
     const upcomingHolidays = allHolidays.filter(holiday => {
