@@ -2,7 +2,7 @@
 const Joi = require('joi');
 const Holiday = require('../models/metrics');
 const axios = require('axios');
-const { initializeCountly } = require('./config/counlty.js'); 
+const { initializeCountly } = require('../config/counlty'); 
 
 
 let countlyPromise = initializeCountly();
