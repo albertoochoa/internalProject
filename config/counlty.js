@@ -3,6 +3,8 @@ const path = require('path');
 require('dotenv').config();
 
 async function initializeCountly() {
+  console.log(process.env.APP_KEY);
+  console.log(process.env.COUNTLY_SRVR_URL);
   try {
     Countly.init({
       app_key: process.env.APP_KEY,
