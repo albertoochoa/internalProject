@@ -1,8 +1,5 @@
 const Joi = require('joi');
-const Holiday = require('../models/metrics'); 
-const { initializeCountly } = require('../config/counlty');
-
-let countlyPromise = initializeCountly();
+const Holiday = require('../models/metrics'); // Make sure this path is correct
 
 const getHolidaysHandler = async (request, h) => {
     const startTime = Date.now();
@@ -23,16 +20,14 @@ const getHolidaysHandler = async (request, h) => {
         const responseTime = Date.now() - startTime;
         const responseTimeInMiliSeconds = responseTime / 1000;
 
-        const countly = await countlyPromise; // Await initialization
-
-        if (countly) { // Check if Countly is ready
+        if (global.countlyInstance) { // Check if Countly is initialized
             console.log(`Sending event to Countly: { key: 'get_holidays', count: 1, response_time: ${responseTimeInMiliSeconds}ms }`);
 
-            countly.add_event({
+            global.countlyInstance.add_event({  // Use the global instance
                 key: 'get_holidays_usages',
                 count: 1,
                 segmentation: { response_time: responseTimeInMiliSeconds }
-            }, (err) => { // Callback for error handling
+            }, (err) => {
                 if (err) {
                     console.error("Countly Event Error:", err);
                 } else {
@@ -48,10 +43,8 @@ const getHolidaysHandler = async (request, h) => {
     } catch (error) {
         console.error("Error in getHolidaysHandler:", error);
 
-        const countly = await countlyPromise; // Await even in error handler
-
-        if (countly) {
-            countly.add_event({
+        if (global.countlyInstance) { // Check if Countly is initialized (even in the error handler)
+            global.countlyInstance.add_event({ // Use the global instance
                 key: 'get_holidays_server_error',
                 count: 1
             }, (err) => {
