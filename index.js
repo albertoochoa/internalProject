@@ -3,7 +3,9 @@ const dotenv = require('dotenv').config();
 const joi = require('joi'); 
 const connectDB = require('./config/db.js');
 const routes = require('./handlers/routes.js');
-const { initializeCountly } = require('./config/counlty.js'); 
+const { initializeCountly } = require('./config/countly'); 
+const Countly = require('countly-sdk-nodejs');
+
 
 let server;
 
