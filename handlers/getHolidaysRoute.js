@@ -1,7 +1,7 @@
 // getHolidaysRoute.js
 const Joi = require('joi');
 const Holiday = require('../models/metrics');
-const { initializeCountly } = require('../config/countly');
+const { initializeCountly } = require('../config/counlty');
 const axios = require('axios');
 
 let countlyPromise = initializeCountly();
