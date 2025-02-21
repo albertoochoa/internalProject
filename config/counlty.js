@@ -14,7 +14,7 @@ async function initializeCountly() {
       app_key: process.env.APP_KEY,
       url: process.env.COUNTLY_SRVR_URL,
       storage_path: storagePath, // Use the absolute path
-      debug: true
+      //debug: true
     });
 
     Countly.begin_session();
