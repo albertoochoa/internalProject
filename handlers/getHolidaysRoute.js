@@ -30,7 +30,7 @@ const getHolidaysHandler = async (request, h) => {
       countly.add_event({
         key: 'get_holidays_usages',
         count: 1,
-        segmentation: { response_time: responseTime} 
+        segmentation: { response_time: responseTime / 1000} 
       });
     } else {
       console.warn("Countly instance not ready for event submission.");
