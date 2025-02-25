@@ -7,13 +7,13 @@ console.log("COUNTLY_SRVR_URL:", process.env.COUNTLY_SRVR_URL);
 
 async function initializeCountly() {
   try {
-    const storagePath = path.join(__dirname, '../countly_storage'); // Absolute path
+    const storagePath = path.join(__dirname, '../countly_storage'); 
     console.log("Storage Path:", storagePath);
 
     Countly.init({
       app_key: process.env.APP_KEY,
       url: process.env.COUNTLY_SRVR_URL,
-      storage_path: storagePath, // Use the absolute path
+      storage_path: storagePath, 
       //debug: true
     });
 
