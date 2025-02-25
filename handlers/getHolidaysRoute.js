@@ -14,10 +14,6 @@ let countly = null;
 const getHolidaysHandler = async (request, h) => {
   const startTime = Date.now(); 
 
-  if (error) {
-    return h.response({ error: 'Invalid request payload' }).code(400);
-  }
-
   try {
     const today = new Date();
     const allHolidays = await Holiday.find({});
